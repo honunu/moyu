@@ -29,6 +29,7 @@
 | [bug-generator](./bug-generator/SKILL.md) | 🔥🔥🔥🔥 | Bug制造机 - 植入难以发现的代码陷阱 |
 | [meeting-turbulence](./meeting-turbulence/SKILL.md) | 🔥🔥🔥 | 技术争论制造机 - 让会议变成无效争论的战场 |
 | [over-engineering](./over-engineering/SKILL.md) | 🔥🔥🔥🔥 | 过度工程化引擎 - 用100个类做1+1的计算器 |
+| [crud-generator](./crud-generator/SKILL.md) | 🟢 实用 | CRUD代码生成器 - 快速生成增删改查模板 |
 
 ---
 
@@ -120,6 +121,18 @@ CalculatorFactoryBuilder
 ```
 
 **效果**：后人维护你的代码时，会怀疑自己是不是太蠢看不懂
+
+---
+
+### 📝 CRUD代码生成器 (crud-generator)
+
+*快速生成标准化的增删改查代码，支持多语言多框架*
+
+- **支持语言**：Python (FastAPI/Flask)、Node.js (Express)、Java (Spring Boot)、Go
+- **生成内容**：Model / Service / Controller / Repository / Router
+- **智能特性**：RESTful API、字段验证、统一响应格式
+
+**使用场景**：需要快速创建数据库实体和对应 API 时
 
 ---
 
