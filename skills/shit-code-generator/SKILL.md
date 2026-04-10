@@ -1,130 +1,133 @@
----
-name: shit-code-generator
-description: "屎山代码生成器。This skill should be used when the user wants to convert clean code into legacy or bad code full of anti-patterns. Triggers when user says: 把代码转成屎山, 生成屎山代码, convert to legacy code, make this code terrible, 加上各种坏味道, 模拟祖传代码, or any request to introduce code smells, naming chaos, magic numbers, dead code, misleading comments, deep nesting, redundant logic, or other anti-patterns into existing code."
----
-
 # 屎山代码生成器 (Shit Code Generator)
 
-将正常代码转换为充满各种反模式和坏味道的"屎山代码"。支持多种编程语言。
-
----
-
-## 支持语言
-
-Python、JavaScript、TypeScript、Java、Go、PHP、C/C++ 等主流语言。
-
----
-
-## 屎山强度等级
-
-| 等级 | 中文描述 | 适用场景 |
-|------|---------|---------|
-| `mild` | 轻度屎山 | 刚入职的菜鸟写的，有一些小问题 |
-| `medium` | 中度屎山（默认） | 经历了多次需求变更，代码勉强能用 |
-| `heavy` | 重度屎山 | 祖传代码，接手就想辞职 |
-| `hell` | 地狱级屎山 | 三个不同水平的人轮流维护了5年 |
-
----
-
-## 执行流程
-
-### Step 1：识别输入
-
-To identify the transformation request:
-1. 确认用户提供了要转换的代码（内联或文件路径）
-2. 确认目标语言（如未指定，根据代码特征自动识别）
-3. 确认屎山强度（如未指定，默认使用 `medium`）
-4. 如用户有特别要求（例如"重点加魔法数字"或"多加死代码"），记录下来
-
-### Step 2：读取规则参考文档
-
-To load the transformation rules:
-- 读取 `references/shitcode_rules.md` 获取完整屎山规则手册
-- 根据强度等级决定应用规则的比例：
-  - mild: 应用 ~30% 的规则
-  - medium: 应用 ~60% 的规则
-  - heavy: 应用 ~90% 的规则
-  - hell: 应用 100% 规则 + 发挥创意
-
-### Step 3：执行转换
-
-To transform the code, apply the following techniques (scale by intensity level):
-
-#### 命名混乱（必选）
-- 将有意义的变量/函数名替换为单字母（`a`, `b`, `x`, `tmp`）、拼音（`yonghu`, `shuju`, `jieguo`）或无意义名称（`doStuff`, `processData2`, `handleThings`）
-- 混用驼峰和下划线命名规范
-- 布尔变量使用双重否定命名（`isNotInvalid`）
-
-#### 魔法数字（必选）
-- 将所有命名常量替换为裸数字
-- 同一个魔法数字在不同地方出现时，至少一处有细微的错误（比如少个零）
-- 将 URL、路径、配置项硬编码到逻辑深处
-
-#### 死代码（必选）
-- 定义 1-2 个有完整实现但从不被调用的函数（放在代码中间，看起来像要被调用）
-- 大量注释掉的旧代码（与现有代码有细微差别，令人迷惑）
-- 添加永远不成立的条件分支
-- 堆积 TODO/FIXME/HACK 注释
-
-#### 冗余代码（必选）
-- 将一段逻辑复制粘贴 2-3 遍，每次稍微改几个变量名
-- 声明变量但从不使用（或赋值后立刻覆盖）
-- 导入/引用大量从未使用的模块
-
-#### 逻辑混乱（中度以上必选）
-- 将扁平逻辑改为 4-6 层深度嵌套
-- 使用反向条件（`if not (x is None)` 代替 `if x is not None`）
-- 一行能写完的逻辑，拆成 8 行写
-- 循环内做不必要的重复计算
-
-#### 注释误导（中度以上必选）
-- 注释内容与代码逻辑矛盾
-- 每行加废话注释（`i = i + 1  // 把 i 加 1`）
-- 加入神秘警告（"不知道为什么，但去掉就报错"）
-- 中英文注释混用
-
-#### 全局变量滥用（重度/地狱级）
-- 通过全局变量传递本来应该是参数的值
-- 函数内部悄悄修改全局状态
-
-#### 结构混乱（地狱级）
-- 将多个独立逻辑堆进一个超长函数
-- 混用多种不同的写法实现同一件事
-- 异常处理用 `except: pass` 静默吞掉所有错误
-
-### Step 4：输出结果
-
-To deliver the result:
-1. 直接输出转换后的完整代码（代码块格式，注明语言）
-2. 在代码下方添加一个简短的「屎山分析报告」，列出应用了哪些屎山技巧（可以用幽默的语气）
-3. 如果用户想要更烂，询问是否要升级到更高等级
-
----
+> 让你的代码变成祖传遗产，后人维护时怀疑人生
 
 ## 核心原则
 
-**必须遵守：**
-- 转换后的代码逻辑上仍然正确（死代码除外），只是实现方式很烂
-- 原有功能必须保留，只是写法变糟糕
-- 要让人感觉像真实代码，不是故意破坏
-- 注释中英文混用，有中文废话也有英文废话
+### 1. 拒绝封装（除了 Service）
+- **只允许 Service 层封装**：只能有 YonghuService、OrderService 这类 Service 类
+- **其他都是过程代码**：所有逻辑直接写在路由函数里，或者写在模块顶层
+- **不要分层的清晰结构**：不要有 repository、controller、handler 这些清晰的划分
 
-**语言特化（根据目标语言应用）：**
-- **Python**：混用 Python 2/3 风格、滥用列表推导嵌套、用 `type()` 而非 `isinstance()`
-- **JavaScript/TypeScript**：混用 `var`/`let`/`const`、回调地狱、`==` 与 `===` 混用、TypeScript 中滥用 `any`
-- **Java**：过度继承、无意义 Getter/Setter、捕获 Exception 然后什么都不做
-- **Go**：忽略错误返回（`val, _ := ...`）、滥用 `interface{}`
+### 2. 过程代码为主
+- 业务逻辑直接写在 `.py` 文件顶部的函数里
+- 大量重复代码，不抽取公共函数
+- 不同功能混在一起，没有清晰的分层
 
----
+### 3. 调用关系混乱
+- Service 层直接调用数据库连接
+- 路由层直接写 SQL
+- 数据库配置层做了业务逻辑
+- 到处都有 get_session()、execute_query() 这种全局调用
 
-## 使用示例
+### 4. 重复造轮子
+- 手写 JSON 解析，不用 json.loads
+- 手写时间处理，不用 datetime
+- 手写列表去重，不用 set
+- 手写字符串拼接，不用 join
+- 明明有 requests 库但手写 socket 发送 HTTP
 
-**用户输入示例：**
-- "帮我把这段 Python 代码转成屎山代码"
-- "把这个 JS 函数写成祖传代码的风格，地狱难度"
-- "这段 Java 代码太整洁了，给我搞烂一点，中等强度"
-- "convert this to legacy code, heavy level"
+### 5. 魔幻细节
+- 魔法数字随意出现
+- 配置写在代码里而不是配置文件
+- 状态码用字符串 "0" "1" "2" 而不是枚举
+- 时间格式混乱，有的地方用时间戳有的用字符串
 
-**预期输出：**
-1. 完整的屎山版代码（代码块）
-2. 简短的屎山分析报告（用幽默语气列出应用的技巧）
+## 生成步骤
+
+### 第一步：定义混乱的数据模型
+- 使用拼音类名或中英混合
+- 字段长度反复修改，留修改痕迹
+- 注释掉但不敢删的字段
+- 用字符串存时间而不是 datetime
+
+### 第二步：手写工具函数
+- 创建 parse_json、get_current_time、remove_duplicates、join_strings 等函数
+- 拒绝使用标准库的 json、datetime、set、join
+- 这些函数放在模块顶部，不抽取到独立文件
+
+### 第三步：Service 层（唯一允许封装的地方）
+- 只能有 Service 类封装业务逻辑
+- 但 Service 里也要有过程代码，直接写 SQL
+- 可以用拼音方法名：chuangjian_yonghu、huoqv_yonghu
+
+### 第四步：路由层混乱
+- 业务逻辑直接写在路由函数里
+- 混用：有时走 Service、有时直接查数据库
+- 手写 JSON 拼接，不用 jsonify
+- 直接写 SQL 字符串拼接
+
+### 第五步：历史痕迹
+- 多次修改的值留注释：MAX_RETRY = 5 → 3 → 10
+- 注释掉的代码行：一行有一行没有
+- 整段注释掉的函数不敢删
+- 每个文件顶部加年份注释，标注谁加的
+
+## 文件命名规范
+
+| 正确 | 屎山风格 |
+|-----|---------|
+| user_model.py | yonghu_model.py 或 user_model.py |
+| database.py | db_config.py 或 database_config.py |
+| user_service.py | yonghu_service.py |
+| user_router.py | user_api.py 或 api.py |
+| main.py | run.py 或 app.py 或 main.py |
+
+## 注释风格
+
+不要每行都加注释，风格要多样化：
+
+| 类型 | 示例 | 出现概率 |
+|-----|------|---------|
+| 无注释 | `def func(): pass` | 40% |
+| 拼音注释 | `# huoqu yonghu` | 20% |
+| 英文拼写错误 | `# get user by id` / `# usre` | 15% |
+| 中文注释 | `# 获取用户列表` | 15% |
+| 中英混用 | `# 获取用户 get user` | 10% |
+
+## 魔幻细节清单
+
+### 命名混乱
+- 拼音变量：yonghu_count、dingdan_list
+- 拼音+英文混合：user_list_data
+- 拼写错误：usre_info、usernaem
+- 中英混用：用户信息 user_info
+- 简写：u_info、udata
+
+### 手写轮子场景
+- JSON 解析：用字符串操作解析
+- 时间获取：用 time.time() 代替 datetime
+- 列表去重：双重循环代替 set
+- 字符串拼接：for 循环代替 join
+- URL 参数解析：手写 socket 代替 requests
+
+### 历史痕迹
+```python
+# 值被修改过多次
+MAX_RETRY = 5
+# MAX_RETRY = 3
+# MAX_RETRY = 10
+
+# 代码被注释掉
+def process_user(user_data):
+    result = process_v3(data)
+    # result = process_v2(data)
+    # result = old_process(data)
+    return result
+```
+
+### 魔幻数据
+- 字符串状态码："0" "1" "2" 而不是枚举
+- 时间格式混乱：时间戳、日期字符串混用
+- 魔法数字：if status == 1 没有注释说明
+- 配置写死：DATABASE_URL = "sqlite:///yonghu.db"
+
+## 总结
+
+生成屎山代码的核心：
+1. **只有 Service 封装**，其他都是过程代码
+2. **调用关系混乱**：路由直接调用数据库，Service 直接写 SQL
+3. **手写一切**：JSON 解析、时间处理、列表去重
+4. **历史痕迹**：注释掉的代码、修改过的值、多个版本
+5. **细节真实**：拼音变量、拼写错误、中英混用
+6. **不要在规则文件里写具体代码**，只描述规则和模式

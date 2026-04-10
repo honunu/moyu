@@ -35,7 +35,10 @@ __pycache__/
 demo/**/*.db
 demo/**/venv/
 
+# Claude Code
+.claude/
+.openclaude-profile.json
+
 # CodeBuddy
 .codebuddy/
-.workbuddy/
 .workbuddy/
