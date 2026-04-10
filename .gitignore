@@ -1,0 +1,35 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# Dependencies
+node_modules/
+venv/
+.env
+.env.local
+
+# Build outputs
+dist/
+build/
+*.class
+*.pyc
+__pycache__/
+
+# CodeBuddy
+.codebuddy/
