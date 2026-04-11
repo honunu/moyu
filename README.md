@@ -11,17 +11,16 @@
 
 ---
 
-## 核心理念
+## 核心功能
 
 ```
-你将学会：
-  - 如何让一个简单的增删改查变成史诗级复杂工程
-  - 如何制造无人能解的bug，成为不可或缺的人
-  - 如何在会议上抛出"高深问题"让大家陷入无意义争论
-  - 如何用屎山代码保护你的工作岗位
+  - 让一个简单的增删改查变成史诗级复杂工程
+  - 制造无人能解的bug，成为不可或缺的人
+  - 参考项目，提出"高深问题"让大家陷入无意义争论
+  - 把代码修改成屎山代码保护你的工作岗位
 ```
 
-**警告：本项目仅供娱乐，请勿用于实际生产环境。如因此被开除，作者概不负责。**
+**警告：本项目仅供娱乐，请勿用于实际生产环境。如因此解雇，作者概不负责。**
 
 ---
 
@@ -31,10 +30,10 @@
 
 | 技能名称 | 危险等级 | 功能描述 |
 |---------|---------|---------|
-| [shit-code-generator](./shit-code-generator/SKILL.md) | 5/5 | 屎山代码生成器 - 将干净代码变成祖传遗产 |
-| [bug-generator](./bug-generator/SKILL.md) | 4/5 | Bug制造机 - 植入难以发现的代码陷阱 |
-| [meeting-turbulence](./meeting-turbulence/SKILL.md) | 3/5 | 技术争论制造机 - 让会议变成无效争论的战场 |
-| [over-engineering](./over-engineering/SKILL.md) | 4/5 | 过度工程化引擎 - 用100个类做1+1的计算器 |
+| [shit-code-generator](./shit-code-generator/SKILL.md) | ☢️☢️☢️☢️☢️ | 屎山代码生成器 - 将干净代码变成祖传遗产 |
+| [bug-generator](./bug-generator/SKILL.md) | ☢️☢️☢️☢️| Bug制造机 - 植入难以发现的代码陷阱 |
+| [meeting-turbulence](./meeting-turbulence/SKILL.md) | ☢️☢️☢️ | 技术争论制造机 - 让会议变成无效争论的战场 |
+| [over-engineering](./over-engineering/SKILL.md) | ☢️☢️☢️☢️ | 过度工程化引擎 - 用100个类做1+1的计算器 |
 | [crud-generator](./crud-generator/SKILL.md) | 实用 | CRUD代码生成器 - 快速生成增删改查模板 |
 
 ---
@@ -91,6 +90,22 @@ cp -r bug-generator meeting-turbulence over-engineering shit-code-generator crud
 ---
 
 ## 使用方法
+
+### 命令行入口 (moyu CLI)
+
+如果你安装了 Claude Code，可以使用命令行入口直接执行摸鱼任务：
+
+```bash
+# 安装 moyu CLI
+cd moyu
+pip install -e .
+
+# 使用 moyu 执行任务
+moyu over-engineering "把删除用户功能过度工程化"
+moyu shit-code-generator "把登录模块转成屎山代码"
+moyu bug-generator "在订单模块里加一些难以发现的bug"
+moyu meeting-turbulence "生成一些代码审查意见"
+```
 
 ### 触发 Skills
 

@@ -1,9 +1,12 @@
 """
-Flask 主入口
+FastAPI 主入口
 2019-2024 多届实习生维护
+2024: 某"架构师"觉得 Flask 太 low 了，改成了 FastAPI
 """
-from flask import Flask, request, jsonify
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 import sqlite3
+import time
 
 # 初始化数据库函数
 def init_db():
@@ -27,15 +30,27 @@ def init_db():
     conn.close()
 
 
-# 创建 Flask 应用
-app = Flask(__name__)
+# 创建 FastAPI 应用
+app = FastAPI(title="用户管理 API", description="2019-2024 多届实习生维护")
 
-# 注册蓝图
-from user_router import yonghu_bp
-app.register_blueprint(yonghu_bp)
+# 数据库配置
+DATABASE_NAME = "yonghu.db"
 
 
-@app.route('/')
+def get_db_connection():
+    """获取数据库连接"""
+    conn = sqlite3.connect(DATABASE_NAME)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def get_current_time_str():
+    """手写时间戳"""
+    import time
+    return str(int(time.time() * 1000))
+
+
+@app.get("/")
 def index():
     """首页"""
     # 2019: return "yonghu api"
@@ -43,30 +58,26 @@ def index():
     # 2021: return "用户管理系统"
     # 2022: 加了版本号
     # 2023: 改成了 API
-    return "yonghu management API v5.0"
+    # 2024: FastAPI 版本
+    return "yonghu management API v6.0 FastAPI Edition"
 
 
-@app.route('/health')
+@app.get("/health")
 def health():
     """健康检查"""
-    return jsonify({"status": "healthy"})
+    return JSONResponse({"status": "healthy"})
 
 
-@app.route('/test')
+@app.get("/test")
 def test():
     """测试接口 - 2020年加的"""
-    return jsonify({"msg": "test ok"})
+    return {"msg": "test ok"}
 
 
-# 数据库配置
-DATABASE_NAME = "yonghu.db"
-
-
-# 2021年加的统计接口
-@app.route('/tongji')
+@app.get("/tongji")
 def get_tongji():
     """获取统计数据"""
-    conn = sqlite3.connect(DATABASE_NAME)
+    conn = get_db_connection()
     cursor = conn.cursor()
 
     # 查询总数
@@ -87,14 +98,13 @@ def get_tongji():
         result += '"' + str(status) + '": ' + str(count)
     result += '}}'
 
-    return result
+    return JSONResponse(content=eval(result))
 
 
-# 2022年加的管理接口
-@app.route('/admin/cleanup', methods=['POST'])
+@app.post("/admin/cleanup")
 def admin_cleanup():
     """清理无效数据"""
-    conn = sqlite3.connect(DATABASE_NAME)
+    conn = get_db_connection()
     cursor = conn.cursor()
 
     # 删除 status=3 的用户
@@ -104,35 +114,36 @@ def admin_cleanup():
     conn.commit()
     conn.close()
 
-    return jsonify({"deleted": deleted})
+    return {"deleted": deleted}
 
 
-# 2023年加的，但是逻辑一直没写完
-@app.route('/yonghu/import', methods=['POST'])
+@app.post("/yonghu/import")
 def import_yonghu():
     """导入用户"""
     # 这个函数没写完，一直没人用所以也没人发现
-    return jsonify({"error": "not implemented"})
+    return {"error": "not implemented"}
 
 
-# 2024年改成了新的导入逻辑，但是还是没完成
-@app.route('/api/yonghu/import', methods=['POST'])
+@app.post("/api/yonghu/import")
 def api_import_yonghu():
     """API 导入用户 - 2024新版"""
-    return jsonify({"error": "pending"})
+    return {"error": "pending"}
 
 
-if __name__ == '__main__':
+# 导入用户路由
+from user_router import router as yonghu_router
+app.include_router(yonghu_router)
+
+
+if __name__ == "__main__":
     # 初始化数据库
     init_db()
 
     # 启动服务
     # PORT = 5000
     # PORT = 8000
-    PORT = 5000
+    # PORT = 5001
+    PORT = 5001
 
-    # DEBUG = False
-    # DEBUG = True
-    DEBUG = False
-
-    app.run(host='0.0.0.0', port=PORT, debug=DEBUG)
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=PORT)
