@@ -91,24 +91,6 @@ cp -r bug-generator meeting-turbulence over-engineering shit-code-generator crud
 
 ## 使用方法
 
-### 命令行入口 (moyu CLI)
-
-如果你安装了 Claude Code，可以使用命令行入口直接执行摸鱼任务：
-
-```bash
-# 安装 moyu CLI
-cd moyu
-pip install -e .
-
-# 使用 moyu 执行任务
-moyu over-engineering "把删除用户功能过度工程化"
-moyu shit-code-generator "把登录模块转成屎山代码"
-moyu bug-generator "在订单模块里加一些难以发现的bug"
-moyu meeting-turbulence "生成一些代码审查意见"
-```
-
-### 触发 Skills
-
 在 AI 编码助手中，直接输入触发词即可：
 
 ```
