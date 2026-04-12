@@ -4,229 +4,183 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-green.svg)](https://claude.ai/code)
 [![CodeBuddy](https://img.shields.io/badge/CodeBuddy-Skills-orange.svg)](https://codebuddy.ai)
-[![AgentSkills](https://img.shields.io/badge/AgentSkills-Open%20Standard-purple.svg)](https://github.com/seb1n/awesome-ai-agent-skills)
 
-> **"上班族的终极生存指南"**
-> 让你的代码看起来像是在努力工作，实际上在愉快摸鱼。
-
----
-
-## 核心功能
-
-```
-  - 让一个简单的增删改查变成史诗级复杂工程
-  - 制造无人能解的bug，成为不可或缺的人
-  - 参考项目，提出"高深问题"让大家陷入无意义争论
-  - 把代码修改成屎山代码保护你的工作岗位
-```
-
-**警告：本项目仅供娱乐，请勿用于实际生产环境。如因此解雇，作者概不负责。**
+> **让你的代码成为"祖传遗产"**
+> 同事不敢改、老板看不懂、面试能吹牛
 
 ---
 
-## 技能列表
+## 一句话介绍
 
-### 禁止在生产环境使用的技能
-
-| 技能名称 | 危险等级 | 功能描述 |
-|---------|---------|---------|
-| [shit-code-generator](./skills/shit-code-generator/SKILL.md) | ☢️☢️☢️☢️☢️ | 屎山代码生成器 - 将干净代码变成祖传遗产 |
-| [bug-generator](./skills/bug-generator/SKILL.md) | ☢️☢️☢️☢️| Bug制造机 - 植入难以发现的代码陷阱 |
-| [over-engineering](./skills/over-engineering/SKILL.md) | ☢️☢️☢️☢️ | 过度工程化引擎 - 用100个类做1+1的计算器 |
-| [crud-generator](./skills/crud-generator/SKILL.md) | 实用 | CRUD代码生成器 - 快速生成增删改查模板 |
+**Moyu** 是一套 AI 编码技能集，让普通代码变成让后人"受益终身"的遗产。
 
 ---
 
-## 安装指南
+## 四大技能
 
-### 环境要求
+| 技能 | 效果 | 危险等级 |
+|-----|------|---------|
+| [屎山代码生成器](./skills/shit-code-generator/SKILL.md) | 普通代码 → 无人敢动的屎山 | ☢️☢️☢️☢️☢️ |
+| [Bug制造机](./skills/bug-generator/SKILL.md) | 植入"高明的"代码陷阱 | ☢️☢️☢️☢️ |
+| [过度工程化引擎](./skills/over-engineering/SKILL.md) | 1+1 = 100个类 | ☢️☢️☢️☢️ |
+| [CRUD代码生成器](./skills/crud-generator/SKILL.md) | 快速生成标准模板 | 实用 |
 
-- Python 3.9+
-- Node.js 18+ (可选，用于Node.js相关skill)
+---
 
-### 安装 Skills
-
-本项目的 skills 可以安装到多种 AI 编码工具中使用。
-
-#### Claude Code
+## 安装
 
 ```bash
-# 克隆项目
 git clone https://github.com/honunu/moyu.git
 cd moyu
 
-# 安装 skills 到 Claude Code
-mkdir -p ~/.claude/skills
+# 安装到 Claude Code / CodeBuddy / Cursor 等
 cp -r bug-generator over-engineering shit-code-generator crud-generator ~/.claude/skills/
 ```
 
-#### CodeBuddy
+---
 
-```bash
-# 克隆项目
-git clone https://github.com/honunu/moyu.git
-cd moyu
+## 实战案例
 
-# 安装 skills 到 CodeBuddy (项目级)
-mkdir -p .codebuddy/skills
-cp -r bug-generator over-engineering shit-code-generator crud-generator .codebuddy/skills/
+### 案例1：屎山代码 - 让代码"永生"
 
-# 或安装到全局 (用户级)
-mkdir -p ~/.codebuddy/skills
-cp -r bug-generator over-engineering shit-code-generator crud-generator ~/.codebuddy/skills/
+**原代码**（正常）：
+```python
+def get_user(user_id):
+    return db.query(User).filter(User.id == user_id).first()
 ```
 
-#### 其他支持 Open Agent Skills 标准的工具
+**经过 Moyu 加工后**（见 [demo/user_api_shitcode](./demo/user_api_shitcode/)）：
+```python
+# 2019-2024 届实习生智慧结晶
+def huoqv_yonghu(yonghu_id):
+    """获取用户 huoqu yonghu"""
+    # 先查缓存
+    cache_key = f"user_{yonghu_id}_cache"
+    result = redis.get(cache_key)
+    if result:
+        return json.loads(result)
 
-将 skills 目录复制到对应工具的 skills 目录即可：
+    # 查不到就查数据库
+    sql = f"SELECT * FROM yonghu WHERE id = {yonghu_id}"  # 2019: 加了格式化
+    cursor.execute(sql)
+    row = cursor.fetchone()
 
-| 工具 | Skills 目录 |
-|-----|------------|
-| Gemini CLI | `~/.gemini/skills/` |
-| Cursor | `~/.cursor/skills/` |
-| Windsurf | `~/.codeium/windsurf/skills/` |
+    if not row:
+        return None
+
+    # 手动转字典，不用 ORM
+    user = {
+        'id': row[0],
+        'yonghu_ming': row[1],  # 2020: 改成拼音
+        'email': row[2],
+        'status': str(row[3]),  # 2021: 字符串状态码
+        # 'old_field': row[4],  # 2022: 注释掉但不敢删
+    }
+
+    # 存缓存，过期时间写死
+    redis.setex(cache_key, 3600, json.dumps(user))
+    return user
+```
+
+> **特点**：拼音变量、手写SQL、魔法数字、历史痕迹、拒绝ORM
+
+---
+
+### 案例2：过度工程 - 一个删除功能的"架构之美"
+
+**原需求**：删除一个用户
+
+**经过 Moyu 加工后**（见 [demo/user_api_shitcode/services/delete](./demo/user_api_shitcode/services/delete/)）：
+
+```
+services/delete/
+├── coordinator/          # 协调层
+│   ├── saga/           # Saga编排器（5步事务）
+│   └── tcc/            # TCC协调器（3阶段）
+├── executor/            # 执行层
+│   ├── adapter/        # 数据库适配器、缓存适配器、消息适配器
+│   ├── domain/         # 领域模型
+│   └── idempotent/     # 幂等性保证
+├── notification/        # 通知层
+│   ├── observer/       # 分布式观察者
+│   └── message/        # Kafka生产者
+├── infrastructure/      # 基础设施层
+│   ├── lock/           # 分布式锁（Redis+ZooKeeper）
+│   ├── registry/       # 服务注册发现
+│   └── config/         # 配置中心
+├── monitoring/          # 监控层
+│   ├── metrics/        # Prometheus指标
+│   ├── trace/          # OpenTelemetry链路追踪
+│   └── alert/          # 告警管理
+└── data/               # 数据层
+    ├── sharding/       # 分片策略
+    ├── cache/          # 缓存失效
+    └── repository/     # 仓储模式
+```
+
+**数据**：
+- **68 个 Python 文件**
+- **6 层抽象**
+- **业界领先的微服务架构理念**
+
+> **核心价值**：可扩展性、可测试性、可维护性、专业的架构设计能力
+>
+> **名言**："一个简单的删除操作，经过架构师的深思熟虑，终于变得...没人能看懂了"
 
 ---
 
 ## 使用方法
 
-在 AI 编码助手中，直接输入触发词即可：
-
 ```
 # 屎山代码
-"把这段代码转成祖传代码，地狱难度"
-"convert this to legacy code, heavy level"
+"把这段代码转成祖传代码"
+"这个函数太简单了，给他加点料"
 
 # Bug制造
-"在这段代码里加一些难以发现的bug"
-"植入静默失败的陷阱"
+"植入一些难以发现的bug"
+"让这个函数静默失败"
 
 # 过度工程
-"用一个加减法计算器演示一下过度工程化的魅力"
-"把简单功能过度设计一下"
-
-# CRUD生成
-"生成一个商品管理的CRUD API"
-"创建一个用户管理模块"
-```
-
-### 技能组合技
-
-```
-屎山代码 + Bug制造 = 无人敢动的代码库
-Bug制造 + 过度工程 = 永远修不完的bug
+"演示一下过度工程化的魅力"
+"把这个删除功能设计得专业一点"
 ```
 
 ---
 
-## 技能详解
+## Demo 演示
 
-### 1. 屎山代码生成器 (shit-code-generator)
-
-让代码看起来像是被三届实习生接力维护了10年。
-
-**支持语言**：Python、JavaScript、TypeScript、Java、Go、PHP、C/C++
-
-**四级强度**：轻度 -> 中度 -> 重度 -> 地狱级
-
-**包含技巧**：
-- 命名混乱（拼音、单字母、无意义名称）
-- 魔法数字（裸数字、错误常量）
-- 死代码（从未调用的函数、注释掉的旧代码）
-- 冗余逻辑（复制粘贴、重复计算）
-- 误导注释（中英文混用、与代码矛盾）
-
-### 2. Bug制造机 (bug-generator)
-
-每一个成功的bug背后，都有一个精心的策划。
-
-**Bug类型**：
-- 静默失败型 - 表面正常，实际悄悄做错事
-- 边界陷阱 - 在边界条件下触发
-- 随机炸弹 - 平均100次炸一次
-- 继承噩梦 - 子类覆盖破坏父类逻辑
-- 并发陷阱 - 线程安全问题
-- 类型混淆 - 跨语言数据交换问题
-- 逻辑陷阱 - 业务逻辑中的微妙错误
-
-### 3. 过度工程化引擎 (over-engineering)
-
-当一个简单的Hello World需要工厂、策略、装饰器、观察者、依赖注入...
-
-**等级**：
-
-| 等级 | 类数量 | 抽象层级 | 文件数量 |
-|-----|-------|---------|---------|
-| 轻度 | 5-10个 | 3层 | 10-20个 |
-| 中度 | 15-30个 | 5层 | 30-50个 |
-| 重度 | 50-100个 | 8层 | 100-200个 |
-| 地狱级 | 100+个 | 10+层 | 200+个 |
-
-### 4. CRUD代码生成器 (crud-generator)
-
-快速生成标准化的增删改查代码。
-
-**支持语言**：Python (FastAPI/Flask)、Node.js (Express)、Java (Spring Boot)、Go
-
-**生成内容**：Model / Service / Controller / Repository / Router
-
----
-
-## Demo 示例
-
-### 目录结构
-
-```
-demo/
-├── user_api/          # FastAPI + SQLite 用户管理 API
-└── ...
-```
-
-### Demo 1: 用户管理 API
-
-基于 FastAPI + SQLite 的用户管理系统。
-
-**启动方式**：
+| 项目 | 说明 |
+|-----|------|
+| [demo/user_api](./demo/user_api/) | 干净的用户管理 API（FastAPI） |
+| [demo/user_api_shitcode](./demo/user_api_shitcode/) | 屎山版 + 过度工程删除功能 |
 
 ```bash
-cd demo/user_api
-
-# 创建虚拟环境
-python3 -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate   # Windows
-
-# 安装依赖
+# 运行屎山版
+cd demo/user_api_shitcode
 pip install -r requirements.txt
-
-# 启动服务
-uvicorn main:app --reload
+python main.py
 ```
 
-**API 文档**：http://localhost:8000/docs
+---
 
-**接口列表**：
+## 技能组合技
 
-| 方法 | 路由 | 说明 |
-|-----|------|-----|
-| POST | `/users/` | 创建用户 |
-| GET | `/users/{id}` | 获取用户详情 |
-| GET | `/users/` | 获取用户列表 |
-| PUT | `/users/{id}` | 更新用户 |
-| DELETE | `/users/{id}` | 删除用户 |
+| 组合 | 效果 |
+|-----|------|
+| 屎山 + Bug制造 | 无人敢动的代码库 |
+| Bug制造 + 过度工程 | 永远修不完的bug |
+| 屎山 + 过度工程 | 简历上的"架构重构经验" |
 
 ---
 
 ## 免责声明
 
 ```
-本项目纯属娱乐！
-
 使用本项目造成的任何后果（包括但不限于）：
-- 被同事打死
-- 被老板开除
+- 被同事围殴
+- 被老板约谈
 - 被技术团队集体拉黑
-- 深夜接到紧急bug电话
+- 深夜被叫醒修bug
 - 头发加速脱落
 
 均由使用者自行承担。
@@ -236,11 +190,11 @@ uvicorn main:app --reload
 
 ## License
 
-**Do What The F*ck You Want To Public License (WTFPL)**
+**WTFPL** - Do What The F*ck You Want To Public License
 
 反正你也不会真的用在生产环境对吧？
 
 ---
 
 *"工作是为了生活，而不是生活为了工作"*
-*—— 某位不愿透露姓名的摸鱼大师*
+—— 某位不愿透露姓名的摸鱼大师
