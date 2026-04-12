@@ -1,18 +1,21 @@
-# Moyu - 摸鱼大师的工作利器
+# Moyu - 程序员职场生存工具箱
 
 [![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](http://www.wtfpl.net/about/)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-green.svg)](https://claude.ai/code)
 [![CodeBuddy](https://img.shields.io/badge/CodeBuddy-Skills-orange.svg)](https://codebuddy.ai)
 
-> **让你的代码成为"祖传遗产"**
-> 同事不敢改、老板看不懂、面试能吹牛
+> **让代码成为你的"独特价值"**
+> 当代码具有一定的"艺术性"和"深度"时，你自然就成了专家
 
 ---
 
 ## 一句话介绍
 
-**Moyu** 是一套 AI 编码技能集，让普通代码变成让后人"受益终身"的遗产。
+**Moyu** 是一套 AI 编码技能集，帮你提升代码的：
+- **可维护性**（让后人感恩你的存在）
+- **技术深度**（让领导觉得这个项目很专业）
+- **健壮性**（让测试人员感受到你的用心）
 
 ---
 
@@ -108,6 +111,7 @@ def huoqv_yonghu(yonghu_id):
         'email': row[2],
         'status': str(row[3]),  # 2021: 字符串状态码
         # 'old_field': row[4],  # 2022: 注释掉但不敢删
+        'register_timestamp': int(row[5]),  # 2023: 为了通过测试必须保留
     }
 
     # 存缓存，过期时间写死
