@@ -30,11 +30,10 @@
 
 | 技能名称 | 危险等级 | 功能描述 |
 |---------|---------|---------|
-| [shit-code-generator](./shit-code-generator/SKILL.md) | ☢️☢️☢️☢️☢️ | 屎山代码生成器 - 将干净代码变成祖传遗产 |
-| [bug-generator](./bug-generator/SKILL.md) | ☢️☢️☢️☢️| Bug制造机 - 植入难以发现的代码陷阱 |
-| [meeting-turbulence](./meeting-turbulence/SKILL.md) | ☢️☢️☢️ | 技术争论制造机 - 让会议变成无效争论的战场 |
-| [over-engineering](./over-engineering/SKILL.md) | ☢️☢️☢️☢️ | 过度工程化引擎 - 用100个类做1+1的计算器 |
-| [crud-generator](./crud-generator/SKILL.md) | 实用 | CRUD代码生成器 - 快速生成增删改查模板 |
+| [shit-code-generator](./skills/shit-code-generator/SKILL.md) | ☢️☢️☢️☢️☢️ | 屎山代码生成器 - 将干净代码变成祖传遗产 |
+| [bug-generator](./skills/bug-generator/SKILL.md) | ☢️☢️☢️☢️| Bug制造机 - 植入难以发现的代码陷阱 |
+| [over-engineering](./skills/over-engineering/SKILL.md) | ☢️☢️☢️☢️ | 过度工程化引擎 - 用100个类做1+1的计算器 |
+| [crud-generator](./skills/crud-generator/SKILL.md) | 实用 | CRUD代码生成器 - 快速生成增删改查模板 |
 
 ---
 
@@ -58,7 +57,7 @@ cd moyu
 
 # 安装 skills 到 Claude Code
 mkdir -p ~/.claude/skills
-cp -r bug-generator meeting-turbulence over-engineering shit-code-generator crud-generator ~/.claude/skills/
+cp -r bug-generator over-engineering shit-code-generator crud-generator ~/.claude/skills/
 ```
 
 #### CodeBuddy
@@ -70,11 +69,11 @@ cd moyu
 
 # 安装 skills 到 CodeBuddy (项目级)
 mkdir -p .codebuddy/skills
-cp -r bug-generator meeting-turbulence over-engineering shit-code-generator crud-generator .codebuddy/skills/
+cp -r bug-generator over-engineering shit-code-generator crud-generator .codebuddy/skills/
 
 # 或安装到全局 (用户级)
 mkdir -p ~/.codebuddy/skills
-cp -r bug-generator meeting-turbulence over-engineering shit-code-generator crud-generator ~/.codebuddy/skills/
+cp -r bug-generator over-engineering shit-code-generator crud-generator ~/.codebuddy/skills/
 ```
 
 #### 其他支持 Open Agent Skills 标准的工具
@@ -102,10 +101,6 @@ cp -r bug-generator meeting-turbulence over-engineering shit-code-generator crud
 "在这段代码里加一些难以发现的bug"
 "植入静默失败的陷阱"
 
-# 技术争论
-"帮我生成一些代码审查意见，要看起来很有道理但实际没用"
-"生成一些技术选型的哲学争论话题"
-
 # 过度工程
 "用一个加减法计算器演示一下过度工程化的魅力"
 "把简单功能过度设计一下"
@@ -119,8 +114,7 @@ cp -r bug-generator meeting-turbulence over-engineering shit-code-generator crud
 
 ```
 屎山代码 + Bug制造 = 无人敢动的代码库
-技术争论 + 过度工程 = 永远做不完的项目
-Bug制造 + 会议争论 = 永远修不完的bug
+Bug制造 + 过度工程 = 永远修不完的bug
 ```
 
 ---
@@ -152,19 +146,10 @@ Bug制造 + 会议争论 = 永远修不完的bug
 - 随机炸弹 - 平均100次炸一次
 - 继承噩梦 - 子类覆盖破坏父类逻辑
 - 并发陷阱 - 线程安全问题
-- 时间炸弹 - 特定时间才触发
+- 类型混淆 - 跨语言数据交换问题
+- 逻辑陷阱 - 业务逻辑中的微妙错误
 
-### 3. 技术争论制造机 (meeting-turbulence)
-
-把一个简单的技术选型讨论，变成旷日持久的哲学辩论。
-
-**包含模块**：
-- 代码审查轰炸 - 看似有理实则无意义的意见
-- 过度思考引擎 - 为简单问题生成3页深度分析
-- 哲学争论生成 - Tab vs 空格等永恒话题
-- 技术债务恐吓 - 用专业术语包装简单需求
-
-### 4. 过度工程化引擎 (over-engineering)
+### 3. 过度工程化引擎 (over-engineering)
 
 当一个简单的Hello World需要工厂、策略、装饰器、观察者、依赖注入...
 
@@ -177,7 +162,7 @@ Bug制造 + 会议争论 = 永远修不完的bug
 | 重度 | 50-100个 | 8层 | 100-200个 |
 | 地狱级 | 100+个 | 10+层 | 200+个 |
 
-### 5. CRUD代码生成器 (crud-generator)
+### 4. CRUD代码生成器 (crud-generator)
 
 快速生成标准化的增删改查代码。
 

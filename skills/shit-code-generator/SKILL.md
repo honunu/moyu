@@ -4,15 +4,15 @@
 
 ## 核心原则
 
-### 1. 拒绝封装（除了 Service）
-- **只允许 Service 层封装**：只能有 YonghuService、OrderService 这类 Service 类
-- **其他都是过程代码**：所有逻辑直接写在路由函数里，或者写在模块顶层
-- **不要分层的清晰结构**：不要有 repository、controller、handler 这些清晰的划分
+### 1. 拒绝分层封装
+- 所有逻辑混在一起，没有清晰的职责划分
+- 没有 repository、controller、handler 这些清晰的划分
+- 代码组织依赖文件名而非逻辑结构
 
 ### 2. 过程代码为主
-- 业务逻辑直接写在 `.py` 文件顶部的函数里
+- 业务逻辑直接写在模块顶部函数里
 - 大量重复代码，不抽取公共函数
-- 不同功能混在一起，没有清晰的分层
+- 不同功能混在一起，没有模块化思想
 
 ### 3. 调用关系混乱
 - Service 层直接调用数据库连接
@@ -20,18 +20,18 @@
 - 数据库配置层做了业务逻辑
 - 到处都有 get_session()、execute_query() 这种全局调用
 
-### 4. 重复造轮子
+### 4. 手写工具函数
 - 手写 JSON 解析，不用 json.loads
 - 手写时间处理，不用 datetime
 - 手写列表去重，不用 set
 - 手写字符串拼接，不用 join
 - 明明有 requests 库但手写 socket 发送 HTTP
 
-### 5. 魔幻细节
-- 魔法数字随意出现
+### 5. 细节真实
+- 魔法数字随意出现，无常量定义
 - 配置写在代码里而不是配置文件
 - 状态码用字符串 "0" "1" "2" 而不是枚举
-- 时间格式混乱，有的地方用时间戳有的用字符串
+- 时间格式混乱，时间戳和字符串混用
 
 ## 生成步骤
 
@@ -40,16 +40,18 @@
 - 字段长度反复修改，留修改痕迹
 - 注释掉但不敢删的字段
 - 用字符串存时间而不是 datetime
+- 字段命名不一致：user_name / userName / yonghu_ming
 
 ### 第二步：手写工具函数
 - 创建 parse_json、get_current_time、remove_duplicates、join_strings 等函数
 - 拒绝使用标准库的 json、datetime、set、join
 - 这些函数放在模块顶部，不抽取到独立文件
 
-### 第三步：Service 层（唯一允许封装的地方）
-- 只能有 Service 类封装业务逻辑
-- 但 Service 里也要有过程代码，直接写 SQL
+### 第三步：Service 层
+- Service 里混着过程代码
+- 直接写 SQL 字符串拼接
 - 可以用拼音方法名：chuangjian_yonghu、huoqv_yonghu
+- 一个方法干多件事，不做单一职责
 
 ### 第四步：路由层混乱
 - 业务逻辑直接写在路由函数里
@@ -67,41 +69,41 @@
 
 | 正确 | 屎山风格 |
 |-----|---------|
-| user_model.py | yonghu_model.py 或 user_model.py |
-| database.py | db_config.py 或 database_config.py |
+| user_model.py | yonghu_model.py |
+| database.py | db_config.py |
 | user_service.py | yonghu_service.py |
-| user_router.py | user_api.py 或 api.py |
-| main.py | run.py 或 app.py 或 main.py |
+| user_router.py | user_api.py |
+| main.py | run.py 或 app.py |
 
 ## 注释风格
 
-不要每行都加注释，风格要多样化：
+风格要多样化，不要每行都加注释：
 
 | 类型 | 示例 | 出现概率 |
 |-----|------|---------|
 | 无注释 | `def func(): pass` | 40% |
 | 拼音注释 | `# huoqu yonghu` | 20% |
-| 英文拼写错误 | `# get user by id` / `# usre` | 15% |
+| 英文拼写错误 | `# get user by id` | 15% |
 | 中文注释 | `# 获取用户列表` | 15% |
 | 中英混用 | `# 获取用户 get user` | 10% |
 
-## 魔幻细节清单
+## 命名混乱
 
-### 命名混乱
 - 拼音变量：yonghu_count、dingdan_list
 - 拼音+英文混合：user_list_data
 - 拼写错误：usre_info、usernaem
 - 中英混用：用户信息 user_info
 - 简写：u_info、udata
 
-### 手写轮子场景
-- JSON 解析：用字符串操作解析
-- 时间获取：用 time.time() 代替 datetime
-- 列表去重：双重循环代替 set
-- 字符串拼接：for 循环代替 join
-- URL 参数解析：手写 socket 代替 requests
+## 魔幻细节
 
-### 历史痕迹
+- 字符串状态码："0" "1" "2" 而不是枚举
+- 时间格式混乱：时间戳、日期字符串混用
+- 魔法数字：if status == 1 没有注释说明
+- 配置写死：DATABASE_URL = "sqlite:///yonghu.db"
+
+## 历史痕迹
+
 ```python
 # 值被修改过多次
 MAX_RETRY = 5
@@ -116,16 +118,10 @@ def process_user(user_data):
     return result
 ```
 
-### 魔幻数据
-- 字符串状态码："0" "1" "2" 而不是枚举
-- 时间格式混乱：时间戳、日期字符串混用
-- 魔法数字：if status == 1 没有注释说明
-- 配置写死：DATABASE_URL = "sqlite:///yonghu.db"
-
 ## 总结
 
 生成屎山代码的核心：
-1. **只有 Service 封装**，其他都是过程代码
+1. **拒绝分层封装**，所有代码混在一起
 2. **调用关系混乱**：路由直接调用数据库，Service 直接写 SQL
 3. **手写一切**：JSON 解析、时间处理、列表去重
 4. **历史痕迹**：注释掉的代码、修改过的值、多个版本
