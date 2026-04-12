@@ -32,10 +32,43 @@
 ```bash
 git clone https://github.com/honunu/moyu.git
 cd moyu
+```
 
-# 安装到 Claude Code / CodeBuddy / Cursor 等
+### Claude Code
+
+```bash
+# 安装到用户级
+mkdir -p ~/.claude/skills
 cp -r bug-generator over-engineering shit-code-generator crud-generator ~/.claude/skills/
 ```
+
+### CodeBuddy
+
+```bash
+# 项目级安装
+mkdir -p .codebuddy/skills
+cp -r bug-generator over-engineering shit-code-generator crud-generator .codebuddy/skills/
+
+# 或全局安装
+mkdir -p ~/.codebuddy/skills
+cp -r bug-generator over-engineering shit-code-generator crud-generator ~/.codebuddy/skills/
+```
+
+### Cursor
+
+```bash
+mkdir -p ~/.cursor/skills
+cp -r bug-generator over-engineering shit-code-generator crud-generator ~/.cursor/skills/
+```
+
+### 其他工具
+
+支持 Open Agent Skills 标准的工具：
+
+| 工具 | Skills 目录 |
+|-----|------------|
+| Gemini CLI | `~/.gemini/skills/` |
+| Windsurf | `~/.codeium/windsurf/skills/` |
 
 ---
 
@@ -130,6 +163,44 @@ services/delete/
 ---
 
 ## 使用方法
+
+### Claude Code
+
+**主动调用技能**：
+```
+/shit-code  # 直接调用屎山代码生成器
+/bug  # 直接调用 Bug制造机
+/over-engineering  # 直接调用过度工程化引擎
+/crud  # 直接调用 CRUD代码生成器
+```
+
+或直接在对话中请求：
+```
+帮我把这段代码变成屎山代码
+用过度工程化的方式设计这个功能
+在这个函数里植入一些难以发现的bug
+```
+
+### CodeBuddy
+
+**主动调用技能**：
+- 在对话中直接说"使用屎山代码生成器"
+- 或"我需要 Bug制造机来优化这段代码"
+- CodeBuddy 会根据 skill 描述自动匹配
+
+### Cursor / Windsurf
+
+**主动调用技能**：
+- 在对话中说明需求，AI 会自动加载对应 skill
+- 或要求 AI "扮演屎山代码生成器角色"
+
+### 其他工具
+
+直接在对话中描述需求，AI 会根据 skill 描述自动匹配对应的技能。
+
+---
+
+### 触发词示例
 
 ```
 # 屎山代码
