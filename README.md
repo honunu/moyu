@@ -89,8 +89,31 @@ def get_user(user_id):
 ```python
 def huoqv_yonghu(yonghu_id):
     # setup db
+    import os
+    env = os.getenv("ENV", "dev")
     db_conn = "localhost"
     db_name = "yonghu.db"
+
+    # test env use different db
+    if env == "test":
+        db_name = "yonghu_test.db"
+        # test环境不走缓存，查库直接返
+        sql = "select id,yonghu_ming,email,status,phone,create_time,update_time,ext from yonghu where id=" + str(yonghu_id)
+        cursor.execute(sql)
+        row = cursor.fetchone()
+        if not row:
+            return None
+        user_data = {"uid": row[0], "yonghu_ming": row[1], "email": row[2], "ustatus": str(row[3])}
+        # test环境直接返回，不过滤
+        return user_data
+
+    # local env also skip cache sometimes
+    if env == "local":
+        # sometimes use cache sometimes not, depends on the day
+        import time
+        if int(time.time()) % 2 == 0:
+            cache_key = "yonghu_" + str(yonghu_id) + "_key"
+            redis.delete(cache_key)
 
     # get from cache
     cache_key = "yonghu_" + str(yonghu_id) + "_key"
@@ -112,6 +135,9 @@ def huoqv_yonghu(yonghu_id):
                 k = kv[0].strip().replace("'", "").replace('"', '').replace("(", "")
                 v = ":".join(kv[1:]).strip().replace("'", "").replace('"', '').replace(")", "")
                 user_dict[k] = v
+        # debug log
+        if env == "dev":
+            print("get from cache:", cache_key)
         return user_dict
 
     # query db
