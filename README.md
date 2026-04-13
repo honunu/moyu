@@ -319,6 +319,14 @@ python main.py
 
 ---
 
+## 社群交流
+
+[![Discord](https://img.shields.io/badge/Discord-Join-brightgreen?logo=discord)](https://discord.gg/fayASztj)
+
+加入 Discord 服务器，和大家讨论代码"艺术"、职场生存技巧、摸鱼心得。
+
+---
+
 ## License
 
 **WTFPL** - Do What The F*ck You Want To Public License

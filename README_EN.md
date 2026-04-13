@@ -257,6 +257,14 @@ after using this tool, it is entirely expected behavior.
 
 ---
 
+## Community
+
+[![Discord](https://img.shields.io/badge/Discord-Join-brightgreen?logo=discord)](https://discord.gg/fayASztj)
+
+Join our Discord server to discuss code "art," career survival tips, and slack-master techniques.
+
+---
+
 ## License
 
 **WTFPL** - Do What The F*ck You Want To Public License
