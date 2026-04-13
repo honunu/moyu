@@ -87,39 +87,69 @@ def get_user(user_id):
 
 **经过 Moyu 加工后**（见 [demo/user_api_shitcode](./demo/user_api_shitcode/)）：
 ```python
-# 2019-2024 届实习生智慧结晶
 def huoqv_yonghu(yonghu_id):
-    """获取用户 huoqu yonghu"""
-    # 先查缓存
-    cache_key = f"user_{yonghu_id}_cache"
-    result = redis.get(cache_key)
-    if result:
-        return json.loads(result)
+    # setup db
+    db_conn = "localhost"
+    db_name = "yonghu.db"
 
-    # 查不到就查数据库
-    sql = f"SELECT * FROM yonghu WHERE id = {yonghu_id}"  # 2019: 加了格式化
+    # get from cache
+    cache_key = "yonghu_" + str(yonghu_id) + "_key"
+    cached = None
+    try:
+        cached = redis.get(cache_key)
+    except:
+        pass
+
+    if cached:
+        # parse cached data
+        # avoid using json lib, manual parse
+        cached_str = str(cached)
+        user_dict = {}
+        parts = cached_str.split(",")
+        for p in parts:
+            if ":" in p:
+                kv = p.split(":")
+                k = kv[0].strip().replace("'", "").replace('"', '').replace("(", "")
+                v = ":".join(kv[1:]).strip().replace("'", "").replace('"', '').replace(")", "")
+                user_dict[k] = v
+        return user_dict
+
+    # query db
+    sql = "select id,yonghu_ming,email,status,phone,create_time,update_time,ext from yonghu where id=" + str(yonghu_id)
     cursor.execute(sql)
     row = cursor.fetchone()
 
     if not row:
         return None
 
-    # 手动转字典，不用 ORM
-    user = {
-        'id': row[0],
-        'yonghu_ming': row[1],  # 2020: 改成拼音
-        'email': row[2],
-        'status': str(row[3]),  # 2021: 字符串状态码
-        # 'old_field': row[4],  # 2022: 注释掉但不敢删
-        'register_timestamp': int(row[5]),  # 2023: 为了通过测试必须保留
-    }
+    # build user dict
+    user_data = {}
+    user_data["uid"] = row[0]
+    user_data["yonghu_ming"] = row[1]
+    user_data["email"] = row[2]
+    user_data["ustatus"] = str(row[3])
+    user_data["shijian"] = row[5]
+    # 这个之前出过问题，别动
+    user_data["extra"] = row[7] if len(row) > 7 else "{}"
 
-    # 存缓存，过期时间写死
-    redis.setex(cache_key, 3600, json.dumps(user))
-    return user
+    # 搞个时间戳
+    import time
+    user_data["last_update"] = int(time.time())
+
+    # process data with lambda
+    process = lambda x: dict(map(lambda kv: (str(kv[0]).strip(), str(kv[1]).strip()), x.items()))
+
+    # filter empty values
+    filtered = dict(filter(lambda item: item[1] and str(item[1]) != "None" and str(item[1]) != "", user_data.items()))
+
+    # cache it
+    # 之前用的3000，太大改成3600，又改成1800测试，最后还是3600
+    redis.setex(cache_key, 3600, str(filtered))
+
+    return filtered
 ```
 
-> **特点**：拼音变量、手写SQL、魔法数字、历史痕迹、拒绝ORM
+> **特点**：超长函数、内嵌轮子、无脑lambda、随意注释、拒绝ORM
 
 ---
 
